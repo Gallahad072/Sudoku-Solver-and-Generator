@@ -1,4 +1,5 @@
 import numpy as np
+import random
 
 
 class Sudoku:
@@ -14,7 +15,43 @@ class Sudoku:
             [0, 0, 0, 0, 0, 0, 0, 7, 4],
             [0, 0, 5, 2, 0, 6, 3, 0, 0],
         ]
+        self.grid = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+        ]
         self.display()
+
+    def gen(self):
+        empty = 0
+        grid_poss = {}
+        for y in range(9):
+            for x in range(9):
+                if self.grid[y][x] == 0:
+                    grid_poss[(x, y)] = [
+                        i + 1 for i in range(9) if self.possible(x, y, i + 1)
+                    ]
+                    empty += 1
+        if empty:
+            min_len = min(len(v) for v in grid_poss.values())
+            if min_len == 0:
+                return
+            (x, y), v = random.choice(
+                [(k, v) for k, v in grid_poss.items() if len(v) == min_len]
+            )
+            for val in v:
+                self.grid[y][x] = val
+                self.gen()
+                self.grid[y][x] = 0
+            return
+        self.display()
+        input("")
 
     def display(self):
         print(np.matrix(self.grid))
@@ -45,4 +82,4 @@ class Sudoku:
 
 
 s = Sudoku()
-s.solve()
+s.gen()
