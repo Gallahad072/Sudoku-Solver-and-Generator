@@ -15,8 +15,6 @@ class Sudoku:
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ]
-        self.solutions = 0
-        self.unique = True
 
     def gen(self):
         grid_poss = {}
@@ -38,9 +36,10 @@ class Sudoku:
                 self.gen()
                 self.grid[y][x] = 0
             return
-        self.display()
-        input("")
+
         self.unique = True
+        self.solutions = 0
+        self.display()
 
     def display(self):
         print(np.matrix(self.grid))
