@@ -48,7 +48,6 @@ class Sudoku:
         if display:
             self.display()
 
-    # FIXME get only one answer displayed
     def solve(self, display=True):
         def solveAlgo():
             for y in range(9):
@@ -57,7 +56,7 @@ class Sudoku:
                         for n in range(1, 10):
                             if self.possible(x, y, n):
                                 self.grid[y][x] = n
-                                self.solve(display)
+                                solveAlgo()
                                 if self.unique is False:
                                     return
                                 self.grid[y][x] = 0
