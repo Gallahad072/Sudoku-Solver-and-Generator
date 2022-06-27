@@ -48,30 +48,27 @@ class Sudoku:
         if display:
             self.display()
 
-    def solve(self, display=True):
-        def solveAlgo():
-            for y in range(9):
-                for x in range(9):
-                    if self.grid[y][x] == 0:
-                        for n in range(1, 10):
-                            if self.possible(x, y, n):
-                                self.grid[y][x] = n
-                                solveAlgo()
-                                if self.unique is False:
-                                    return
-                                self.grid[y][x] = 0
-                        return
+    def solve(self, display=True, unique=None):
+        for y in range(9):
+            for x in range(9):
+                if self.grid[y][x] == 0:
+                    for n in range(1, 10):
+                        if self.possible(x, y, n):
+                            self.grid[y][x] = n
+                            unique = self.solve(display, unique)
+                            if unique is False:
+                                return unique
+                            self.grid[y][x] = 0
+                    return unique
 
-            if self.unique is None:
-                self.unique = True
-                if display:
-                    self.display()
-            elif self.unique is True:
-                self.unique = False
+        if unique is None:
+            unique = True
+            if display:
+                self.display()
+        elif unique is True:
+            unique = False
 
-        self.unique = None
-        solveAlgo()
-        return self.unique
+        return unique
 
     def getProblem(self, display=True):
         self.getValidBoard(False)
