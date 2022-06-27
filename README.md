@@ -1,8 +1,8 @@
 # Sudoku Generator and Solver
 
-This program will generate and solve sudoku problems.
+This program will generate and solve Sudoku problems.
 
-I intend to use this project not only to display my understanding of recursiion and backtracking algorithms but also to learn more langauges by writing this project in them.
+I'm doing this to develop my understanding of recursion and backtracking algorithms and to learn more langauges.
 
 ## Languages
 
@@ -14,7 +14,7 @@ I intend to use this project not only to display my understanding of recursiion 
 
 ### To Implement:
 
-- Javascript
+- JavaScript
 - Java
 - C
 - C++
@@ -28,4 +28,4 @@ I intend to use this project not only to display my understanding of recursiion 
 - Dart
 - Kotlin
 - Swift
-- Typescript
+- TypeScript
