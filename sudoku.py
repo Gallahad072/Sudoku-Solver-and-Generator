@@ -15,6 +15,7 @@ class Sudoku:
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ]
+        self.gen()
 
     def gen(self):
         grid_poss = {}
@@ -22,7 +23,7 @@ class Sudoku:
             for x in range(9):
                 if self.grid[y][x] == 0:
                     grid_poss[(x, y)] = [
-                        i for i in range(1, 10) if self.possible(x, y, i)
+                        n for n in range(1, 10) if self.possible(x, y, n)
                     ]
         if len(grid_poss) > 0:
             min_len = min(len(v) for v in grid_poss.values())
@@ -37,9 +38,22 @@ class Sudoku:
                 self.grid[y][x] = 0
             return
 
-        self.unique = True
-        self.solutions = 0
+        pairs = [(i, j) for i, j in zip(range(41), range(80, 41, -1))]
+        random.shuffle(pairs)
+        for i, j in pairs:
+            self.unique = True
+            self.solutions = 0
+            temp1 = self.grid[i // 9][i % 9]
+            temp2 = self.grid[j // 9][j % 9]
+            self.grid[i // 9][i % 9] = 0
+            self.grid[j // 9][j % 9] = 0
+            self.solve()
+            if not self.unique:
+                self.grid[i // 9][i % 9] = temp1
+                self.grid[j // 9][j % 9] = temp2
+
         self.display()
+        input("")
 
     def display(self):
         print(np.matrix(self.grid))
@@ -65,13 +79,13 @@ class Sudoku:
                             self.solve()
                             self.grid[y][x] = 0
                     return
+
         self.solutions += 1
         if self.solutions > 1:
             self.unique = False
             return
-        self.display()
 
 
 s = Sudoku()
-s.solve()
+s.gen()
 print(s.unique)
