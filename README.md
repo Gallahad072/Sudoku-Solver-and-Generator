@@ -28,3 +28,4 @@ I intend to use this project not only to display my understanding of recursiion 
 - Dart
 - Kotlin
 - Swift
+- Typescript
