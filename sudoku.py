@@ -21,7 +21,6 @@ class Sudoku:
         return True
 
     def getValidBoard(self, display=True):
-        self.found = False
         grid_poss = {}
         for y in range(9):
             for x in range(9):
@@ -29,6 +28,7 @@ class Sudoku:
                     grid_poss[(x, y)] = [
                         n for n in range(1, 10) if self.possible(x, y, n)
                     ]
+
         if len(grid_poss) > 0:
             min_len = min(len(v) for v in grid_poss.values())
             if min_len == 0:
@@ -38,37 +38,39 @@ class Sudoku:
             )
             for val in v:
                 self.grid[y][x] = val
-                self.getValidBoard(display)
-                if self.found:
+                if self.getValidBoard(display):
                     return
                 self.grid[y][x] = 0
             return
 
-        self.found = True
         if display:
             self.display()
 
-    def solve(self, display=True, unique=None):
-        for y in range(9):
-            for x in range(9):
-                if self.grid[y][x] == 0:
-                    for n in range(1, 10):
-                        if self.possible(x, y, n):
-                            self.grid[y][x] = n
-                            unique = self.solve(display, unique)
-                            if unique is False:
-                                return unique
-                            self.grid[y][x] = 0
-                    return unique
+        return True
 
-        if unique is None:
-            unique = True
-            if display:
-                self.display()
-        elif unique is True:
-            unique = False
+    def solve(self, display=True):
+        def solveAlgo():
+            for y in range(9):
+                for x in range(9):
+                    if self.grid[y][x] == 0:
+                        for n in range(1, 10):
+                            if self.possible(x, y, n):
+                                self.grid[y][x] = n
+                                solveAlgo()
+                                if self.unique is False:
+                                    return
+                                self.grid[y][x] = 0
+                        return
+            if self.unique is None:
+                self.unique = True
+                if display:
+                    self.display()
+            elif self.unique is True:
+                self.unique = False
 
-        return unique
+        self.unique = None
+        solveAlgo()
+        return self.unique
 
     def getProblem(self, display=True):
         self.getValidBoard(False)
@@ -104,6 +106,7 @@ class Sudoku:
             self.display()
 
 
-s = Sudoku()
-s.gen()
-s.solve()
+if __name__ == "__main__":
+    s = Sudoku()
+    s.display()
+    s.solve()
