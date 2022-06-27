@@ -4,20 +4,24 @@ import random
 
 class Sudoku:
     def __init__(self) -> None:
-        self.grid = [
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        ]
-        self.gen()
+        self.gen(False)
 
-    def gen(self):
+    def display(self):
+        print(np.matrix(self.grid))
+
+    def possible(self, x, y, n):
+        for i in range(9):
+            if n in (self.grid[y][i], self.grid[i][x]):
+                return False
+        x0, y0 = (x // 3) * 3, (y // 3) * 3
+        for i in range(3):
+            for j in range(3):
+                if self.grid[y0 + i][x0 + j] == n:
+                    return False
+        return True
+
+    def getValidBoard(self, display=True):
+        self.found = False
         grid_poss = {}
         for y in range(9):
             for x in range(9):
@@ -34,58 +38,76 @@ class Sudoku:
             )
             for val in v:
                 self.grid[y][x] = val
-                self.gen()
+                self.getValidBoard(display)
+                if self.found:
+                    return
                 self.grid[y][x] = 0
             return
 
+        self.found = True
+        if display:
+            self.display()
+
+    # FIXME get only one answer displayed
+    def solve(self, display=True):
+        def solveAlgo():
+            for y in range(9):
+                for x in range(9):
+                    if self.grid[y][x] == 0:
+                        for n in range(1, 10):
+                            if self.possible(x, y, n):
+                                self.grid[y][x] = n
+                                self.solve(display)
+                                if self.unique is False:
+                                    return
+                                self.grid[y][x] = 0
+                        return
+
+            if self.unique is None:
+                self.unique = True
+                if display:
+                    self.display()
+            elif self.unique is True:
+                self.unique = False
+
+        self.unique = None
+        solveAlgo()
+        return self.unique
+
+    def getProblem(self, display=True):
+        self.getValidBoard(False)
         pairs = [(i, j) for i, j in zip(range(41), range(80, 41, -1))]
         random.shuffle(pairs)
         for i, j in pairs:
-            self.unique = True
-            self.solutions = 0
             temp1 = self.grid[i // 9][i % 9]
             temp2 = self.grid[j // 9][j % 9]
             self.grid[i // 9][i % 9] = 0
             self.grid[j // 9][j % 9] = 0
-            self.solve()
-            if not self.unique:
+            if not self.solve(False):
                 self.grid[i // 9][i % 9] = temp1
                 self.grid[j // 9][j % 9] = temp2
+        if display:
+            self.display()
 
-        self.display()
-        input("")
-
-    def display(self):
-        print(np.matrix(self.grid))
-
-    def possible(self, x, y, n):
-        for i in range(9):
-            if n in (self.grid[y][i], self.grid[i][x]):
-                return False
-        x0, y0 = (x // 3) * 3, (y // 3) * 3
-        for i in range(3):
-            for j in range(3):
-                if self.grid[y0 + i][x0 + j] == n:
-                    return False
-        return True
-
-    def solve(self):
-        for y in range(9):
-            for x in range(9):
-                if self.grid[y][x] == 0:
-                    for n in range(1, 10):
-                        if self.possible(x, y, n):
-                            self.grid[y][x] = n
-                            self.solve()
-                            self.grid[y][x] = 0
-                    return
-
-        self.solutions += 1
-        if self.solutions > 1:
-            self.unique = False
-            return
+    def gen(self, display=True):
+        self.grid = []
+        while [x for xx in self.grid for x in xx].count(0) < 36:
+            self.grid = [
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            ]
+            self.getProblem(False)
+        if display:
+            self.display()
 
 
 s = Sudoku()
 s.gen()
-print(s.unique)
+s.solve()
