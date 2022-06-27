@@ -89,7 +89,7 @@ class Sudoku:
 
     def gen(self, display=True):
         self.grid = []
-        while [x for xx in self.grid for x in xx].count(0) < 36:
+        while [x for xx in self.grid for x in xx].count(0) < 30:
             self.grid = [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
