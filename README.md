@@ -6,8 +6,6 @@ I'm doing this to develop my understanding of recursion and backtracking algorit
 
 ## Languages
 
----
-
 ### Implemented:
 
 - [Python](/python/)
