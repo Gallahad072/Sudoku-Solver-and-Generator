@@ -17,5 +17,3 @@ I'm doing this to develop my understanding of recursion and backtracking algorit
 - C
 - C++
 - C#
-- Go
-- Swift
