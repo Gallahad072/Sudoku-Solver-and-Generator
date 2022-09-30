@@ -7,7 +7,20 @@ class Sudoku:
         self.gen(False)
 
     def display(self):
-        print(np.matrix(self.grid))
+        print()
+        for i in range(9):
+            if i % 3 == 0:
+                print("---------------------")
+            print(
+                " ".join(
+                    [
+                        (str(self.grid[i][j]) if self.grid[i][j] != 0 else " ")
+                        + (" |" if j % 3 == 2 else "")
+                        for j in range(9)
+                    ]
+                )[:-2]
+            )
+        print("---------------------\n")
 
     def possible(self, x, y, n):
         for i in range(9):
