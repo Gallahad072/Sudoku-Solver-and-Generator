@@ -9,11 +9,11 @@ I'm doing this to develop my understanding of recursion and backtracking algorit
 ### Implemented:
 
 - [Python](/python/)
+- [Java](/java/)
 
 ### To Implement:
 
 - JavaScript
-- Java
 - C
 - C++
 - C#
