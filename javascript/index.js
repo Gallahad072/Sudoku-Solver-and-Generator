@@ -74,7 +74,7 @@ class Sudoku {
       for (let n of v) {
         this.grid[y][x] = n;
         if (this.getValidBoard()) {
-          return false;
+          return true;
         }
         this.grid[y][x] = 0;
       }
