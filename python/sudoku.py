@@ -32,7 +32,7 @@ class Sudoku:
                     return False
         return True
 
-    def getValidBoard(self, display=True):
+    def getValidBoard(self):
         grid_poss = {}
         for y in range(9):
             for x in range(9):
@@ -44,20 +44,16 @@ class Sudoku:
         if len(grid_poss) > 0:
             min_len = min(len(v) for v in grid_poss.values())
             if min_len == 0:
-                return
+                return False
             (x, y), v = random.choice(
                 [(k, v) for k, v in grid_poss.items() if len(v) == min_len]
             )
             for val in v:
                 self.grid[y][x] = val
-                if self.getValidBoard(display):
-                    return
+                if self.getValidBoard():
+                    return False
                 self.grid[y][x] = 0
-            return
-
-        if display:
-            self.display()
-
+            return False
         return True
 
     def solve(self, display=True):
@@ -85,7 +81,7 @@ class Sudoku:
         return self.unique
 
     def getProblem(self, display=True):
-        self.getValidBoard(False)
+        self.getValidBoard()
         pairs = [(i, j) for i, j in zip(range(41), range(80, 41, -1))]
         random.shuffle(pairs)
         for i, j in pairs:
