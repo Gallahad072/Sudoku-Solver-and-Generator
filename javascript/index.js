@@ -35,8 +35,8 @@ class Sudoku {
         return false;
       }
     }
-    let x0, y0;
-    x0, (y0 = Math.floor(x / 3) * 3), Math.floor(y / 3) * 3;
+    let x0 = Math.floor(x / 3) * 3;
+    let y0 = Math.floor(y / 3) * 3;
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
         if (this.grid[y0 + i][x0 + j] == n) {
@@ -126,6 +126,7 @@ class Sudoku {
   // FIXME
   getProblem() {
     this.getValidBoard(false);
+    console.log(this.grid);
     let pairs = [];
     for (let i = 0; i < 41; i++) {
       pairs.push([i, 80 - i]);
