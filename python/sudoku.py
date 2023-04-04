@@ -51,7 +51,7 @@ class Sudoku:
             for val in v:
                 self.grid[y][x] = val
                 if self.getValidBoard():
-                    return False
+                    return True
                 self.grid[y][x] = 0
             return False
         return True
