@@ -91,9 +91,9 @@ class Sudoku:
                 self.grid[i // 9][i % 9] = temp1
                 self.grid[j // 9][j % 9] = temp2
 
-    def gen(self):
+    def gen(self, zero_threshold=40):
         self.grid = []
-        while [x for xx in self.grid for x in xx].count(0) < 30:
+        while [x for xx in self.grid for x in xx].count(0) < zero_threshold:
             self.grid = [
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
