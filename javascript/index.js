@@ -31,7 +31,7 @@ class Sudoku {
 
   possible(x, y, n) {
     for (let i = 0; i < 9; i++) {
-      if (n in [this.grid[y][i], this.grid[i][x]]) {
+      if (n == this.grid[y][i] || n == this.grid[i][x]) {
         return false;
       }
     }
@@ -52,10 +52,13 @@ class Sudoku {
     for (let y = 0; y < 9; y++) {
       for (let x = 0; x < 9; x++) {
         if (this.grid[y][x] == 0) {
-          grid_poss[(x, y)] = [];
+          grid_poss[[x, y]] = [];
           for (let n = 1; n < 10; n++) {
+            if (n == 1) {
+              console.log(grid_poss, this.grid, n);
+            }
             if (this.possible(x, y, n)) {
-              grid_poss[(x, y)].push(n);
+              grid_poss[[x, y]].push(n);
             }
           }
         }
