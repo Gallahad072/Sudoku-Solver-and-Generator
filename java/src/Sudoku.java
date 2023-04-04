@@ -50,7 +50,7 @@ public class Sudoku {
                         array[i] = n;
                         i++;
                     }
-                    grid_poss.add(new int[][]{new int[]{x, y}, array});
+                    grid_poss.add(new int[][] { new int[] { x, y }, array });
                 }
             }
         }
@@ -82,7 +82,7 @@ public class Sudoku {
             for (int val : v) {
                 grid[y][x] = val;
                 if (getValidBoard(display)) {
-                    return false;
+                    return true;
                 }
                 grid[y][x] = 0;
             }
@@ -110,7 +110,7 @@ public class Sudoku {
         int counter1 = 0;
         int counter2 = 80;
         for (int i = 0; i < 40; i++) {
-            pairs[i] = new int[]{counter1, counter2};
+            pairs[i] = new int[] { counter1, counter2 };
             counter1++;
             counter2--;
         }
@@ -177,7 +177,8 @@ public class Sudoku {
         solveAlgo(display);
         return unique;
     }
-    public void solve(){
+
+    public void solve() {
         solve(true);
     }
 
@@ -215,6 +216,7 @@ public class Sudoku {
             display();
         }
     }
+
     public void gen() {
         gen(true);
     }
