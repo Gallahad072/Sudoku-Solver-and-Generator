@@ -4,7 +4,6 @@ class Sudoku {
   }
 
   display() {
-    console.log(this.grid);
     let temp, element;
     console.log();
     for (let i = 0; i < 9; i++) {
@@ -48,7 +47,7 @@ class Sudoku {
     return true;
   }
 
-  getValidBoard(display = true) {
+  getValidBoard() {
     let grid_poss = {};
     for (let y = 0; y < 9; y++) {
       for (let x = 0; x < 9; x++) {
@@ -71,20 +70,17 @@ class Sudoku {
       (x, y), (v = temp[Math.floor(Math.random() * temp.length)]);
       for (let n of v) {
         this.grid[y][x] = n;
-        if (this.getValidBoard(display)) {
+        if (this.getValidBoard()) {
           return false;
         }
         this.grid[y][x] = 0;
       }
       return false;
     }
-    if (display) {
-      this.display();
-    }
     return true;
   }
 
-  solveAlgo(display) {
+  solveAlgo() {
     for (let y = 0; y < 9; y++) {
       for (let x = 0; x < 9; x++) {
         if (this.grid[y][x] == 0) {
@@ -104,17 +100,14 @@ class Sudoku {
     }
     if (this.unique == null) {
       this.unique = true;
-      if (display) {
-        this.display();
-      }
     } else if (this.unique == true) {
       this.unique = false;
     }
   }
 
-  solve(display = true) {
+  solve() {
     this.unique = null;
-    this.solveAlgo(display);
+    this.solveAlgo();
     return this.unique;
   }
   shuffle(array) {
@@ -131,7 +124,7 @@ class Sudoku {
     return array;
   }
   // FIXME
-  getProblem(display = true) {
+  getProblem() {
     this.getValidBoard(false);
     let pairs = [];
     for (let i = 0; i < 41; i++) {
@@ -149,12 +142,9 @@ class Sudoku {
         this.grid[Math.floor(j / 9)][j % 9] = temp2;
       }
     }
-    if (display) {
-      this.display();
-    }
   }
   // FIXME
-  gen(display = true) {
+  gen() {
     this.grid = [];
     // while (this.grid.flat().filter((x) => x == 0).length < 30) {
     //   this.grid = [];
@@ -165,9 +155,6 @@ class Sudoku {
     //     }
     //   }
     //   this.getProblem(false);
-    //   if (display) {
-    //     this.display();
-    //   }
     // }
     this.grid = [];
     for (let i = 0; i < 9; i++) {
@@ -177,12 +164,10 @@ class Sudoku {
       }
     }
     this.getProblem(false);
-    if (display) {
-      this.display();
-    }
   }
 }
 
 s = new Sudoku();
 s.display();
 s.solve();
+s.display();
