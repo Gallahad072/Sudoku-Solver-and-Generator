@@ -3,7 +3,7 @@ import random
 
 class Sudoku:
     def __init__(self) -> None:
-        self.gen(False)
+        self.gen()
 
     def display(self):
         print()
@@ -56,7 +56,7 @@ class Sudoku:
             return False
         return True
 
-    def solve(self, display=True):
+    def solve(self):
         def solveAlgo():
             for y in range(9):
                 for x in range(9):
@@ -71,8 +71,6 @@ class Sudoku:
                         return
             if self.unique is None:
                 self.unique = True
-                if display:
-                    self.display()
             elif self.unique is True:
                 self.unique = False
 
@@ -80,7 +78,7 @@ class Sudoku:
         solveAlgo()
         return self.unique
 
-    def getProblem(self, display=True):
+    def getProblem(self):
         self.getValidBoard()
         pairs = [(i, j) for i, j in zip(range(41), range(80, 41, -1))]
         random.shuffle(pairs)
@@ -89,13 +87,11 @@ class Sudoku:
             temp2 = self.grid[j // 9][j % 9]
             self.grid[i // 9][i % 9] = 0
             self.grid[j // 9][j % 9] = 0
-            if not self.solve(False):
+            if not self.solve():
                 self.grid[i // 9][i % 9] = temp1
                 self.grid[j // 9][j % 9] = temp2
-        if display:
-            self.display()
 
-    def gen(self, display=True):
+    def gen(self):
         self.grid = []
         while [x for xx in self.grid for x in xx].count(0) < 30:
             self.grid = [
@@ -109,12 +105,11 @@ class Sudoku:
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0, 0],
             ]
-            self.getProblem(False)
-        if display:
-            self.display()
+            self.getProblem()
 
 
 if __name__ == "__main__":
     s = Sudoku()
     s.display()
     s.solve()
+    s.display()
