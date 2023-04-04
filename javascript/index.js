@@ -1,6 +1,6 @@
 class Sudoku {
-  constructor() {
-    this.gen(false);
+  constructor(zero_threshold = 40) {
+    this.gen(zero_threshold);
   }
 
   display() {
@@ -113,6 +113,7 @@ class Sudoku {
     this.solveAlgo();
     return this.unique;
   }
+
   shuffle(array) {
     let currentIndex = array.length,
       randomIndex;
@@ -126,7 +127,7 @@ class Sudoku {
     }
     return array;
   }
-  // FIXME
+
   getProblem() {
     this.getValidBoard(false);
     let pairs = [];
@@ -146,27 +147,19 @@ class Sudoku {
       }
     }
   }
-  // FIXME
-  gen() {
+
+  gen(zero_threshold) {
     this.grid = [];
-    // while (this.grid.flat().filter((x) => x == 0).length < 30) {
-    //   this.grid = [];
-    //   for (let i = 0; i < 9; i++) {
-    //     this.grid.push([]);
-    //     for (let j = 0; j < 9; j++) {
-    //       this.grid[i].push([0]);
-    //     }
-    //   }
-    //   this.getProblem(false);
-    // }
-    this.grid = [];
-    for (let i = 0; i < 9; i++) {
-      this.grid.push([]);
-      for (let j = 0; j < 9; j++) {
-        this.grid[i].push([0]);
+    while (this.grid.flat().filter((x) => x == 0).length < zero_threshold) {
+      this.grid = [];
+      for (let i = 0; i < 9; i++) {
+        this.grid.push([]);
+        for (let j = 0; j < 9; j++) {
+          this.grid[i].push([0]);
+        }
       }
+      this.getProblem(false);
     }
-    this.getProblem(false);
   }
 }
 
