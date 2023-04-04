@@ -54,9 +54,6 @@ class Sudoku {
         if (this.grid[y][x] == 0) {
           grid_poss[[x, y]] = [];
           for (let n = 1; n < 10; n++) {
-            if (n == 1) {
-              console.log(grid_poss, this.grid, n);
-            }
             if (this.possible(x, y, n)) {
               grid_poss[[x, y]].push(n);
             }
@@ -64,13 +61,16 @@ class Sudoku {
         }
       }
     }
-    if (grid_poss.length > 0) {
-      min_len = Math.min(...Object.values(grid_poss).map((x) => x.length));
+    if (Object.keys(grid_poss).length > 0) {
+      let min_len = Math.min(...Object.values(grid_poss).map((x) => x.length));
       if (min_len == 0) {
         return false;
       }
+      let temp, x, y, v;
       temp = Object.entries(grid_poss).filter((x) => x[1].length == min_len);
-      (x, y), (v = temp[Math.floor(Math.random() * temp.length)]);
+      temp = temp[Math.floor(Math.random() * temp.length)];
+      [x, y] = temp[0].split(",").map((x) => parseInt(x));
+      v = temp[1];
       for (let n of v) {
         this.grid[y][x] = n;
         if (this.getValidBoard()) {
@@ -129,7 +129,6 @@ class Sudoku {
   // FIXME
   getProblem() {
     this.getValidBoard(false);
-    console.log(this.grid);
     let pairs = [];
     for (let i = 0; i < 41; i++) {
       pairs.push([i, 80 - i]);
