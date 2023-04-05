@@ -6,12 +6,8 @@ I'm doing this to develop my understanding of recursion and backtracking algorit
 
 ## Languages
 
-### Implemented with Backtracking:
+### Implemented:
 
 - Python
 - Java
 - JavaScript
-
-### Implemented with Wave Function Collapse:
-
-- Python (DOING)
