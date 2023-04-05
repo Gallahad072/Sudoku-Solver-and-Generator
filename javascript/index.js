@@ -1,6 +1,6 @@
 class Sudoku {
-  constructor(zero_threshold = 40) {
-    this.gen(zero_threshold);
+  constructor() {
+    this.gen();
   }
 
   display() {
@@ -24,7 +24,6 @@ class Sudoku {
         }
       }
       console.log(temp.join(" "));
-      // TODO add [:-2]
     }
     console.log("  -----------------------------");
   }
@@ -83,14 +82,14 @@ class Sudoku {
     return true;
   }
 
-  solveAlgo() {
+  solveAlgo(display) {
     for (let y = 0; y < 9; y++) {
       for (let x = 0; x < 9; x++) {
         if (this.grid[y][x] == 0) {
           for (let n = 1; n < 10; n++) {
             if (this.possible(x, y, n)) {
               this.grid[y][x] = n;
-              this.solveAlgo();
+              this.solveAlgo(display);
               if (this.unique == false) {
                 return false;
               }
@@ -103,14 +102,17 @@ class Sudoku {
     }
     if (this.unique == null) {
       this.unique = true;
+      if (display) {
+        this.display();
+      }
     } else if (this.unique == true) {
       this.unique = false;
     }
   }
 
-  solve() {
+  solve(display = true) {
     this.unique = null;
-    this.solveAlgo();
+    this.solveAlgo(display);
     return this.unique;
   }
 
@@ -148,7 +150,7 @@ class Sudoku {
     }
   }
 
-  gen(zero_threshold) {
+  gen(zero_threshold = 40) {
     this.grid = [];
     while (this.grid.flat().filter((x) => x == 0).length < zero_threshold) {
       this.grid = [];
@@ -166,4 +168,3 @@ class Sudoku {
 s = new Sudoku();
 s.display();
 s.solve();
-s.display();
