@@ -56,7 +56,7 @@ class Sudoku:
             return False
         return True
 
-    def solve(self):
+    def solve(self, display=True):
         def solveAlgo():
             for y in range(9):
                 for x in range(9):
@@ -71,6 +71,8 @@ class Sudoku:
                         return
             if self.unique is None:
                 self.unique = True
+                if display:
+                    self.display()
             elif self.unique is True:
                 self.unique = False
 
@@ -87,7 +89,7 @@ class Sudoku:
             temp2 = self.grid[j // 9][j % 9]
             self.grid[i // 9][i % 9] = 0
             self.grid[j // 9][j % 9] = 0
-            if not self.solve():
+            if not self.solve(False):
                 self.grid[i // 9][i % 9] = temp1
                 self.grid[j // 9][j % 9] = temp2
 
@@ -112,4 +114,3 @@ if __name__ == "__main__":
     s = Sudoku()
     s.display()
     s.solve()
-    s.display()
