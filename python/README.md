@@ -22,11 +22,9 @@ To Create and object named 'x':
 >
 > Pass in x as the column, y as the row, n as the number to check.
 
-`getValidBoard(display=True)`
+`getValidBoard()`
 
 > Creates a full sudoku Board that is valid.
->
-> Pass in the bool of displayed to determine wether the full board is displayed.
 
 `solve(display=True)`
 
@@ -34,14 +32,12 @@ To Create and object named 'x':
 >
 > Pass in the bool of displayed to determine wether the solved board is displayed.
 
-`getProblem(display=True)`
+`getProblem()`
 
 > Creates a valid sudoku problem.
->
-> Pass in the bool of displayed to determine wether the solved board is displayed.
 
-`gen(display=True)`
+`gen(zero_threshold=40)`
 
 > Creates a valid sudoku problem with at least 30 missing values.
 >
-> Pass in the bool of displayed to determine wether the solved board is displayed.
+> Pass in the int of zero_threshold to determine how many zeros are in the problem.
